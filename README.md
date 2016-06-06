@@ -5,6 +5,15 @@ Java library for [DaData.Ru](https://dadata.ru/) REST API
 
 [API documentation](https://dadata.ru/api/clean/)
 
+## Installation
+``` xml
+<dependency>
+    <groupId>ru.leon0399</groupId>
+    <artifactId>dadata</artifactId>
+    <version>0.8.0</version>
+</dependency>
+```
+
 ## Usage
 ``` java
 DaData dadata = DaData daData = new DaData(">YOUR API KEY<", ">YOUR SECRET KEY<");
