@@ -1,4 +1,4 @@
-DaData Java API
+DaData Java API [![GitHub version](https://badge.fury.io/gh/leon0399%2Fdadata.svg)](https://badge.fury.io/gh/leon0399%2Fdadata) [![Build Status](https://travis-ci.org/leon0399/dadata.svg?branch=master)](https://travis-ci.org/leon0399/dadata) [![Coverage Status](https://coveralls.io/repos/github/leon0399/dadata/badge.svg?branch=master)](https://coveralls.io/github/leon0399/dadata?branch=master)
 ===============
 
 Java library for [DaData.Ru](https://dadata.ru/) REST API

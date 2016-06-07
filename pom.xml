@@ -6,7 +6,7 @@
 
     <groupId>ru.leon0399</groupId>
     <artifactId>dadata</artifactId>
-    <version>0.8.0</version>
+    <version>0.8.0-SNAPSHOT</version>
     <name>DaData</name>
     <description>Java library for DaData.Ru REST API</description>
     <url>https://github.com/leon0399/dadata</url>
