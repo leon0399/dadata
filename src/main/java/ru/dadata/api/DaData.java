@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.dadata.api.entity.*;
 
 import java.io.IOException;
@@ -20,14 +20,14 @@ import java.net.URL;
 /**
  * @author leon0399
  */
-public class DaData {
+public final class DaData {
     private static final String API_VERSION = "v2";
     private static final String API_URL = "https://dadata.ru/api";
 
     private static final String REQUEST_METHOD_GET = "GET";
     private static final String REQUEST_METHOD_POST = "POST";
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LoggerFactory.getLogger(DaData.class);
     private final String authKey;
     private final String authSecret;
     private Gson gson = new GsonBuilder().create();
@@ -119,7 +119,7 @@ public class DaData {
             connection.addRequestProperty("Authorization", "Token " + authKey);
             connection.addRequestProperty("X-Secret", authSecret);
 
-            if(sources.length > 0) {
+            if (sources.length > 0) {
                 connection.setDoOutput(true);
                 OutputStream outputStream = connection.getOutputStream();
                 outputStream.write(gson.toJson(sources).getBytes());
@@ -131,12 +131,12 @@ public class DaData {
 
             toReturn = IOUtils.toString(inputStream, "UTF-8");
             inputStream.close();
-        } catch(ProtocolException e) {
-            LOGGER.error(e);
-        } catch(MalformedURLException e) {
-            LOGGER.error(e);
-        } catch(IOException e) {
-            LOGGER.error(e);
+        } catch (ProtocolException e) {
+            LOGGER.error("Error fetching data", e);
+        } catch (MalformedURLException e) {
+            LOGGER.error("Error fetching data", e);
+        } catch (IOException e) {
+            LOGGER.error("Error fetching data", e);
         }
 
         return toReturn;

@@ -18,20 +18,20 @@ public class DaDataTest extends Assert {
      *
      * @see <a href="https://dadata.ru/profile/#info">Профиль</a>
      */
-    private static final String API_KEY = ">YOUR API KEY<";
+    private static final String API_KEY = "aa1c6a1386068296b98805d0e5a900066ebf02b0";
 
     /**
      * Секретный ключ для стандартизации
      *
      * @see <a href="https://dadata.ru/profile/#info">Профиль</a>
      */
-    private static final String API_SECRET = ">YOUR SECRET KEY<";
+    private static final String API_SECRET = "1e0bf10e569107c100480361ed67df8741000dd0";
 
     private DaData daData = new DaData(API_KEY, API_SECRET);
 
     @Before
     public void tearUp() {
-        LOGGER.info("Ваш балан: {}р.", daData.getBalance());
+        LOGGER.info("Ваш баланс: {}р.", daData.getBalance());
     }
 
     @Test
