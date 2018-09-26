@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author leon0399
@@ -30,7 +31,7 @@ public final class DaData {
     private static final Logger LOGGER = LoggerFactory.getLogger(DaData.class);
     private final String authKey;
     private final String authSecret;
-    private Gson gson = new GsonBuilder().create();
+    private final Gson gson = new GsonBuilder().create();
 
     /**
      * @param key
@@ -122,7 +123,7 @@ public final class DaData {
             if (sources.length > 0) {
                 connection.setDoOutput(true);
                 OutputStream outputStream = connection.getOutputStream();
-                outputStream.write(gson.toJson(sources).getBytes());
+                outputStream.write(gson.toJson(sources).getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
                 outputStream.close();
             }
