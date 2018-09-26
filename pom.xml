@@ -6,7 +6,7 @@
 
     <groupId>ru.leon0399</groupId>
     <artifactId>dadata</artifactId>
-    <version>1.0.0-RC1</version>
+    <version>1.0.0-snapshot</version>
     <name>DaData</name>
     <description>Java library for DaData.Ru REST API</description>
     <url>https://github.com/leon0399/dadata</url>
@@ -34,7 +34,7 @@
     <developers>
         <developer>
             <id>leon0399</id>
-            <name>Leonid Melyoshin</name>
+            <name>Leonid Meleshin</name>
         </developer>
     </developers>
 
@@ -109,6 +109,19 @@
                 </executions>
                 <configuration>
                     <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                    <check />
                 </configuration>
             </plugin>
         </plugins>
