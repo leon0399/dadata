@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import ru.dadata.api.entity.*;
 
@@ -18,16 +19,22 @@ public class DaDataTest extends Assert {
      *
      * @see <a href="https://dadata.ru/profile/#info">Профиль</a>
      */
-    private static final String API_KEY = "aa1c6a1386068296b98805d0e5a900066ebf02b0";
+    private static final String API_KEY = "[REDACTED]";
 
     /**
      * Секретный ключ для стандартизации
      *
      * @see <a href="https://dadata.ru/profile/#info">Профиль</a>
      */
-    private static final String API_SECRET = "1e0bf10e569107c100480361ed67df8741000dd0";
+    private static final String API_SECRET = "[REDACTED]";
 
     private DaData daData = new DaData(API_KEY, API_SECRET);
+
+    public DaDataTest() {
+        String apiKey = System.getenv("API_KEY");
+        String apiSecret = System.getenv("API_SECRET");
+        daData = new DaData(apiKey, apiSecret);
+    }
 
     @Before
     public void tearUp() {
@@ -60,7 +67,7 @@ public class DaDataTest extends Assert {
         assertEquals(null, address.getCityTypeFull());
         assertEquals(null, address.getCity());
         assertEquals("Северо-восточный", address.getCityArea());
-        assertEquals("Северное Медведково р-н", address.getCityDistrict());
+        assertEquals("Северное Медведково", address.getCityDistrict());
         assertEquals(null, address.getSettlementFiasId());
         assertEquals(null, address.getSettlementKladrId());
         assertEquals(null, address.getSettlementWithType());
@@ -95,7 +102,7 @@ public class DaDataTest extends Assert {
         assertEquals("45280583000", address.getOkato());
         assertEquals("45362000", address.getOktmo());
         assertEquals("7715", address.getTaxOffice());
-        assertEquals(null, address.getTaxOfficeLegal());
+        assertEquals("7715", address.getTaxOfficeLegal());
         assertEquals("UTC+3", address.getTimezone());
         assertEquals(55.878506, address.getGeoLat(), 0.0005);
         assertEquals(37.6535443, address.getGeoLon(), 0.0005);
@@ -110,13 +117,13 @@ public class DaDataTest extends Assert {
     public void cleanPhone() throws Exception {
         final Phone phone = daData.cleanPhone("тел 7165219 доб139");
 
-        assertEquals("Рабочий", phone.getType());
+        assertEquals("Стационарный", phone.getType());
         assertEquals("+7 495 716-52-19 доб. 139", phone.getPhone());
         assertEquals("7", phone.getCountryCode());
         assertEquals("495", phone.getCityCode());
         assertEquals("7165219", phone.getNumber());
         assertEquals("139", phone.getExtension());
-        assertEquals("ОАО \"Московская городская телефонная сеть\"", phone.getProvider());
+        assertEquals("ОАО \"МГТС\"", phone.getProvider());
         assertEquals("Москва", phone.getRegion());
         assertEquals("UTC+3", phone.getTimezone());
     }
