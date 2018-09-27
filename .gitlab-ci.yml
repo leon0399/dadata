@@ -1,4 +1,3 @@
-
 variables:
   MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
@@ -11,6 +10,10 @@ stages:
   - build
   - test
   - deploy
+  - pages
+
+before_script:
+- 'gpg -v --import <(echo "$GPG_PRIVATE_KEY" | base64 -d)'
 
 .validate: &validate
   stage: build
@@ -25,6 +28,7 @@ stages:
   - bash <(curl -s https://codecov.io/bash) -t "${CODECOV_TOKEN}"
   except:
   - master
+  - hotfix/1.0.0-rc.1
   artifacts:
     reports:
       junit:
@@ -52,14 +56,14 @@ verify:jdk8:
   image: maven:3.3.9-jdk-8
 
 deploy:jdk8:
-  # Use stage test here, so the pages job may later pickup the created site.
-  stage: test
+  stage: deploy
   script:
   - 'cp .gitlab/settings.xml /root/.m2/settings.xml'
   - 'sed -i "s/${CI_JOB_TOKEN}/${CI_JOB_TOKEN}/g" /root/.m2/settings.xml'
   - 'mvn $MAVEN_CLI_OPTS clean deploy site site:stage -DskipTests=true -B -U'
   only:
   - master
+  - hotfix/1.0.0-rc.1
   # Archive up the built documentation site.
   artifacts:
     paths:
@@ -68,7 +72,7 @@ deploy:jdk8:
 
 pages:
   image: busybox:latest
-  stage: deploy
+  stage: pages
   script:
   # Because Maven appends the artifactId automatically to the staging path if you did define a parent pom,
   # you might need to use `mv target/staging/YOUR_ARTIFACT_ID public` instead.
