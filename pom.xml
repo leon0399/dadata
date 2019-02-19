@@ -143,7 +143,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.21</version>
+            <version>1.7.26</version>
         </dependency>
 
         <!-- http://mvnrepository.com/artifact/com.google.code.gson/gson -->
